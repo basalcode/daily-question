@@ -83,3 +83,34 @@
     형변환과 유사해 보이지만, 컴파일 타임에 특별한 검사를 수행하지 않는다.<br />
     컴파일러는 개발자가 특정 검사를 수행했다고 판단한다.<br /> 
     JSX 문법에서는 as를 이용한 타입단언만 사용할 수 있다.<br />
+
+2. 인터페이스
+* 덕 타이핑(Duck typing) 또는 구조적 서브타이핑(Structural subtyping)
+    ```Typescript
+    interface Student {
+        name: string;
+        address: string;
+        age?: number;
+        readonly phone: string;
+    }
+
+    function introduce(student: Student): void {
+        const { name, address, age } = student;
+
+        console.log(`Hi, I'm ${name}.`);
+        console.log(`I live in ${name}.`);
+        if (age) console.log(`I'm ${age}.`);
+    }
+
+    let studentA: Student {
+        name: 'Alex',
+        address: 'Seoul',
+        age: 20, // 생략할 수 있다.
+        phone: 01012345678, // 수정할 수 없다.
+    }
+
+    introduce(studentA);
+    ```
+    object의 프로퍼티에 타입을 정하고 싶을 때 interface를 사용하면 된다.<br />
+    `프로퍼티?`를 사용하면 프로퍼티를 생략할 수 있다.<br />
+    `readonly` 수정할 수 없다.<br />
