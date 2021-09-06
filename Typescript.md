@@ -27,7 +27,11 @@
     ```Typescript
         let odds: number[] = [1, 3, 5, 7, 9];
         let evens: Array<number> = [2, 4, 6, 8, 10];
+
+        let weeks: ReadonlyArray<string> = ['Mon', 'Tue', 'Wed', 'Tur', "Fri', 'Sat', 'Sun'];
     ```
+    `ReadonlyArray`는 값을 변경할 수 없다.<br /> 
+    값을 변경하는 메소드 또한 지원하지 않음.<br /> 
 
 * tuple
     ```Typescript
@@ -84,33 +88,76 @@
     컴파일러는 개발자가 특정 검사를 수행했다고 판단한다.<br /> 
     JSX 문법에서는 as를 이용한 타입단언만 사용할 수 있다.<br />
 
-2. 인터페이스
+### 2. 인터페이스
+#### object의 프로퍼티에 타입을 정하고 싶을 때 사용한다.
+
 * 덕 타이핑(Duck typing) 또는 구조적 서브타이핑(Structural subtyping)
+    ```Typescript
+        interface Vehicle {
+            name: string,
+            speed: number
+        }
+
+        function run(vehicle: Vehicle): void {
+            let { name, speed } = vehicle;
+
+            console.log(`${name} is running at ${speed}km/h.`);
+        }
+
+        let car = {
+            name: 'car',
+            model: 'ferrari',
+            speed: 100
+        }
+
+        run(car);
+    ```
+    전달된 인자가 더 많은 프로퍼티를 가지고 있지만 애러가 나지 않는다.<br />
+
+* 타입 
     ```Typescript
     interface Student {
         name: string;
-        address: string;
-        age?: number;
-        readonly phone: string;
+        address?: string;
+        readonly age: number;
     }
 
     function introduce(student: Student): void {
         const { name, address, age } = student;
 
         console.log(`Hi, I'm ${name}.`);
-        console.log(`I live in ${name}.`);
-        if (age) console.log(`I'm ${age}.`);
+        if (address) console.log(`I live in ${address}.`);
+        console.log(`I'm ${age}.`);
     }
 
     let studentA: Student {
         name: 'Alex',
-        address: 'Seoul',
-        age: 20, // 생략할 수 있다.
-        phone: 01012345678, // 수정할 수 없다.
+        address: 'Seoul', // 생략할 수 있다.
+        age: 20, // 수정할 수 없다.
     }
 
     introduce(studentA);
     ```
-    object의 프로퍼티에 타입을 정하고 싶을 때 interface를 사용하면 된다.<br />
-    `프로퍼티?`를 사용하면 프로퍼티를 생략할 수 있다.<br />
-    `readonly` 수정할 수 없다.<br />
+    `프로퍼티명?`를 사용하면 프로퍼티를 생략할 수 있다.<br />
+    `readonly`를 사용한 프로퍼티는 수정할 수 없다.<br />
+
+* 초과 프로퍼티 검사 (Excess Property Checks)
+    ```Typescript
+    interface Fruit {
+        name: string,
+        price: number,
+    }
+
+    let fruitA {
+        name: 'apple',
+        price: 3000,
+        color: 'red'
+    }
+
+    let fruitB: Fruit {
+        name: 'banana',
+        price: 2500,
+        color: 'yellow' // 초과프로퍼티 검사로 인해 애러가 발생한다.
+    }
+    ```
+    인터페이스로 지정된 것보다 더 많은 프로퍼티를 사용할 수 없다.<br />
