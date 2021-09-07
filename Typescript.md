@@ -161,3 +161,33 @@
     }
     ```
     인터페이스로 지정된 것보다 더 많은 프로퍼티를 사용할 수 없다.<br />
+
+* 함수 타입 (Functional Types)
+    ```Typescript
+    interface SearchFunc {
+        (source: string, subString: string): boolean;
+    }
+
+    let mySearch: SearchFunc = function (src: string, sub: string) {
+        let result = source.search(subString);
+
+        return result > - 1;
+    };
+    ```
+    인터페이스를 함수의 형식을 지정하는데 사용할 수 있다.<br />
+
+* 인덱서블 타입 (Indexable Types)
+    ```Typescript
+    interface StringArray {
+        [index: number]: string;
+    }
+    let myArray: StringArray = ['Bob', 'Fred'];
+
+    interface Dictionary {
+        [key: string]: number | string;
+        length: number;
+        name: string;
+        isOn: true; // 애러
+    }
+    ```
+    인덱서블 타입을 사용하면 배열뿐 아니라 객체의 키와 값에 대한 타입도 정할 수 있다.<br />
