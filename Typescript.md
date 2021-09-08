@@ -191,3 +191,40 @@
     }
     ```
     인덱서블 타입을 사용하면 배열뿐 아니라 객체의 키와 값에 대한 타입도 정할 수 있다.<br />
+
+* 클래스 타입 (Class Types)
+    ```Typescript
+    interface ClockInterface {
+        currentTime: Date;
+        setTime(d: Date): void;
+    }
+
+    class Clock implements ClockInterface {
+        currentTime: Date = new Date();
+        setTime(d: Date) {
+            this.currentTime = d;
+        }
+        constructor(h: number, m: number) { }
+    }
+    ```
+    인터페이스를 사용해 클래스를 구현할 수 있다.
+
+* 인터페이스 확장 (Extend Interface)
+    ```Typescript
+    interface Shape {
+        color: string;
+    }
+
+    interface PenStroke {
+        penWidth: number;
+    }
+
+    interface Square extends Shape, PenStroke {
+        sideLength: number;
+    }
+
+    let square = {} as Square;
+    square.color = "blue";
+    square.sideLength = 10;
+    square.penWidth = 5.0;
+    ```
