@@ -228,3 +228,34 @@
     square.sideLength = 10;
     square.penWidth = 5.0;
     ```
+### 3. 함수
+* 함수 타입
+    ```Typescript
+    function add(x: number, y: number): number {
+        return x + y;
+    }
+
+    let sub = function(x: number, y: number): number {
+        return x - y;
+    }
+    ```
+* 함수 타입 작성하기 (writing the function type)
+    ```Typescript
+    let add: (baseValue: number, increment: number) => number =
+    function (x: number, y: number): number {
+        return x + y;
+    }
+    ```
+
+* 타입추론
+    ```Typescript
+    let add = function(x: number, y: number): number {
+        return x + y;
+    }
+
+    let sub: (x: number, y: number) => number = function(x, y) {
+        return x - y;
+    }
+    ```
+    `=`를 기준으로 좌항 또는 우항 한쪽에만 타입이 부여되어있어도 타입 추론이 가능하다.<br />
+    `contextual typing` 이라고 한다.<br />
