@@ -28,7 +28,7 @@
         let odds: number[] = [1, 3, 5, 7, 9];
         let evens: Array<number> = [2, 4, 6, 8, 10];
 
-        let weeks: ReadonlyArray<string> = ['Mon', 'Tue', 'Wed', 'Tur', "Fri', 'Sat', 'Sun'];
+        let weeks: ReadonlyArray<string> = ['Mon', 'Tue', 'Wed', 'Tur', 'Fri', 'Sat', 'Sun'];
     ```
     `ReadonlyArray`는 값을 변경할 수 없다.<br /> 
     값을 변경하는 메소드 또한 지원하지 않음.<br /> 
@@ -229,7 +229,7 @@
     square.penWidth = 5.0;
     ```
 ### 3. 함수
-* 함수 타입
+* 함수의 타이핑 (Typing the function)
     ```Typescript
     function add(x: number, y: number): number {
         return x + y;
@@ -239,7 +239,8 @@
         return x - y;
     }
     ```
-* 함수 타입 작성하기 (writing the function type)
+
+* 함수 타입 작성하기 (Writing the function type)
     ```Typescript
     let add: (baseValue: number, increment: number) => number =
     function (x: number, y: number): number {
@@ -247,7 +248,7 @@
     }
     ```
 
-* 타입추론
+* 타입 추론 (Inferring the Type)
     ```Typescript
     let add = function(x: number, y: number): number {
         return x + y;
@@ -259,3 +260,66 @@
     ```
     `=`를 기준으로 좌항 또는 우항 한쪽에만 타입이 부여되어있어도 타입 추론이 가능하다.<br />
     `contextual typing` 이라고 한다.<br />
+
+* 선택적 매개변수와 기본 매개변수 (Optional and Default Parameter)
+    ```Typescript
+    function introduce(name: string, age?: number) {
+        console.log(`Hello, I'm ${name}.`);
+        if (age) console.log(`I'm ${age}.`);
+    }
+    ```
+    `매개변수명?`을 사용하면 선택적으로 값을 받을 수 있다.<br />
+    ```Typescript
+    function introduce(name: string, age: number = 20) {
+        console.log(`Hello, I'm ${name}.`);
+        console.log(`I'm ${age}.`);
+    }
+    ```
+    매개변수에 기본 값을 지정하는 것도 가능하다.<br />
+
+* 나머지 매개변수(Rest Parameter)
+    ```Typescript
+    function printScores(name: string, ...scores: number[]) {
+        console.log(`name: ${name}.`);
+        console.log(`score: ${scores.join(' ')}`);
+    }
+
+    printScores('alex', 1, 2, 3, 4, 5);
+    ```
+
+* 오버로드 (Overloads)
+    ```Typescript
+    function introduce(person: {name: string}): void;
+    function introduce(person: {name: string; age: number}): void;
+    function introduce(person: {name: string; age: number; isStudent: boolean}): void;
+    function introduce(person: any): void {
+        let { name, age, isStudent } = person;
+
+        if (name) console.log(`I'm ${name}.`);
+        if (age) console.log(`I'm ${age}.`);
+        if (isStudent) console.log(`I'm a student.`);
+    }
+
+    introduce({name: 'alex'});
+    introduce({name: 'alex', age: 20});
+    introduce({name: 'alex', age: 20, isStudent: true});
+    ```
+    함수명과 매개변수의 개수가 같아야 사용할 수 있다.<br />
+    함수의 오버로드 선언을먼저 해주고 마지막에 함수를 정의해준다.<br />
+
+### 4. 리터럴 타입
+* 문자열 리터럴 타입
+    ```Typescript
+    type Position = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
+
+    function(position: Position): void {
+        // 로직
+    }
+    ```
+* 숫자형 리터럴 타입
+    ```Typescript
+    interface Dice{
+        number: 1 | 2 | 3 | 4 | 5 | 6;
+    }
+    ```
+    Enum 과 유사한 역할을 할 수 있다.<br />
